@@ -1,15 +1,49 @@
 <script setup>
-import HelloWorld from '@components/HelloWorld.vue';
+const input1 = ref('');
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div class="row q-gutter-lg justify-center">
+    <div class="col-sm-4 col">
+      <div class="column q-gutter-lg">
+        <q-form>
+          <q-card bordered class="q-pa-lg">
+            <div class="column q-gutter-lg">
+              <e-textfield :disable="false" bg-color="orange" label="Imports" />
+
+              <e-input v-model="input1" type="number" label="Outlined" />
+
+              <e-input v-model="input1" type="number" label="Outlined" />
+            </div>
+          </q-card>
+        </q-form>
+        <e-button label="Execute" />
+      </div>
+    </div>
+    <div class="col-sm-4 col">
+      <div class="column q-gutter-lg">
+        <q-form>
+          <q-card bordered class="q-pa-lg">
+            <div class="column q-gutter-lg">
+              <e-textfield :disable="false" bg-color="orange" label="Outputs" />
+
+              <e-input v-model="input1" readonly label="Outlined" />
+
+              <e-input v-model="input1" readonly label="Outlined" />
+
+              <e-button label="Show Chart" />
+            </div>
+          </q-card>
+        </q-form>
+      </div>
+    </div>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
+
+<style lang="scss">
+#app {
+  width: 100vw;
+  height: 100vh;
+  padding: 1rem;
+}
+</style>

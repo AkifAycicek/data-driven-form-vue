@@ -11,7 +11,9 @@ declare module 'vue' {
     EDataDrivenForm: typeof import('./src/components/EDataDrivenForm.vue')['default']
     EInput: typeof import('./src/components/EInput.vue')['default']
     ETextfield: typeof import('./src/components/ETextfield.vue')['default']
+    QBadge: typeof import('quasar')['QBadge']
     QCard: typeof import('quasar')['QCard']
     QForm: typeof import('quasar')['QForm']
+    QLinearProgress: typeof import('quasar')['QLinearProgress']
   }
 }

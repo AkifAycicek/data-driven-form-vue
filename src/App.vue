@@ -23,9 +23,11 @@ const formData = {
       type: 'number',
       'bg-color': 'white',
     },
-
     // ID3: {
-    //   ID0: {},
+    //   ID0: {
+    //     componentType: 'QField',
+    //     label: 'Nothing',
+    //   },
     // },
   },
   outputs: {
@@ -55,6 +57,7 @@ const formData = {
     },
     ID3: {
       componentType: 'EButton',
+      fieldAccessor: 'graphBtn',
       disable: false,
       type: 'submit',
       label: 'Show Chart',
@@ -67,23 +70,47 @@ const formData = {
 
 const inputForm = Form.create({
   data: {},
+  rules: {
+    x: 'numeric|required|min:0|max:100',
+    y: 'numeric|required|min:0|max:100',
+  },
+  // true
 });
 
 const outputForm = Form.create({
   data: {},
 });
 
-function execute() {
-  const [x, y] = map(values(inputForm.toObject()), (e) => parseFloat(e));
+function* counter() {
+  let counter = 1;
 
-  if (isNumber(x) && isNumber(y))
-    outputForm.merge({
-      addition: x + y,
-      multiplication: x * y,
-    });
+  while (true) {
+    yield counter++;
+    if (counter > 6) {
+      counter = 0;
+    }
+  }
+}
+const clickCounter = counter();
+const clickCount = ref(null);
 
-  console.log(inputForm.toObject());
-  console.log(outputForm.toObject());
+async function execute() {
+  clickCount.value = clickCounter.next().value;
+
+  if (clickCount.value >= 6) {
+    const { x, y } = fromPairs(
+      map(toPairs(inputForm.toObject()), ([key, value]) => [key, parseFloat(value)]),
+    );
+
+    if (inputForm.validate() && isNumber(x) && isNumber(y)) {
+      outputForm.merge({
+        addition: x + y,
+        multiplication: x * y,
+      });
+
+    console.log(inputForm.toObject());
+    console.log(outputForm.toObject());
+  }
 }
 </script>
 
@@ -95,7 +122,14 @@ function execute() {
           :data="formData.inputs"
           :model-value="inputForm"
           @input="(value) => inputForm.merge(value)" />
-        <EButton label="Execute" @click="execute" />
+        <EButton push label="Execute" @click="execute()">
+          <QBadge v-if="clickCount > 0" color="orange" floating :label="clickCount" />
+          <QLinearProgress
+            v-if="clickCount > 0"
+            color="orange"
+            :value="(clickCount / 60) * 10"
+            class="q-mt-md" />
+        </EButton>
       </div>
     </div>
     <div class="col-sm-4 col-auto">

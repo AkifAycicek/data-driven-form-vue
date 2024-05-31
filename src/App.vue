@@ -1,40 +1,109 @@
 <script setup>
-const input1 = ref('');
+const formData = {
+  inputs: {
+    ID0: {
+      componentType: 'ETextfield',
+      disable: false,
+      label: 'Inputs',
+      'bg-color': 'orange',
+    },
+    ID1: {
+      componentType: 'EInput',
+      fieldAccessor: 'x',
+      disable: false,
+      label: 'X',
+      type: 'number',
+      'bg-color': 'white',
+    },
+    ID2: {
+      componentType: 'EInput',
+      fieldAccessor: 'y',
+      disable: false,
+      label: 'Y',
+      type: 'number',
+      'bg-color': 'white',
+    },
+
+    // ID3: {
+    //   ID0: {},
+    // },
+  },
+  outputs: {
+    ID0: {
+      componentType: 'ETextfield',
+      disable: false,
+      label: 'Results',
+      'bg-color': 'green',
+    },
+    ID1: {
+      componentType: 'EInput',
+      fieldAccessor: 'addition',
+      disable: false,
+      readonly: true,
+      outlined: true,
+      label: 'Addition',
+      'bg-color': 'white',
+    },
+    ID2: {
+      componentType: 'EInput',
+      fieldAccessor: 'multiplication',
+      disable: false,
+      readonly: true,
+      outlined: true,
+      label: 'Multiplication',
+      'bg-color': 'white',
+    },
+    ID3: {
+      componentType: 'EButton',
+      disable: false,
+      type: 'submit',
+      label: 'Show Chart',
+      label2: 'Hide Chart',
+      'bg-color': 'green',
+      'bg-color2': 'grey',
+    },
+  },
+};
+
+const inputForm = Form.create({
+  data: {},
+});
+
+const outputForm = Form.create({
+  data: {},
+});
+
+function execute() {
+  const [x, y] = map(values(inputForm.toObject()), (e) => parseFloat(e));
+
+  if (isNumber(x) && isNumber(y))
+    outputForm.merge({
+      addition: x + y,
+      multiplication: x * y,
+    });
+
+  console.log(inputForm.toObject());
+  console.log(outputForm.toObject());
+}
 </script>
 
 <template>
   <div class="row q-gutter-lg justify-center">
-    <div class="col-sm-4 col">
+    <div class="col-sm-4 col-auto">
       <div class="column q-gutter-lg">
-        <q-form>
-          <q-card bordered class="q-pa-lg">
-            <div class="column q-gutter-lg">
-              <e-textfield :disable="false" bg-color="orange" label="Imports" />
-
-              <e-input v-model="input1" type="number" label="Outlined" />
-
-              <e-input v-model="input1" type="number" label="Outlined" />
-            </div>
-          </q-card>
-        </q-form>
-        <e-button label="Execute" />
+        <EDataDrivenForm
+          :data="formData.inputs"
+          :model-value="inputForm"
+          @input="(value) => inputForm.merge(value)" />
+        <EButton label="Execute" @click="execute" />
       </div>
     </div>
-    <div class="col-sm-4 col">
+    <div class="col-sm-4 col-auto">
       <div class="column q-gutter-lg">
-        <q-form>
-          <q-card bordered class="q-pa-lg">
-            <div class="column q-gutter-lg">
-              <e-textfield :disable="false" bg-color="orange" label="Outputs" />
-
-              <e-input v-model="input1" readonly label="Outlined" />
-
-              <e-input v-model="input1" readonly label="Outlined" />
-
-              <e-button label="Show Chart" />
-            </div>
-          </q-card>
-        </q-form>
+        <EDataDrivenForm
+          :data="formData.outputs"
+          :model-value="outputForm"
+          @submit.prevent="execute" />
       </div>
     </div>
   </div>

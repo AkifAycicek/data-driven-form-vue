@@ -1,11 +1,11 @@
 <template>
-  <q-field standout color="black" v-bind="attrs">
+  <QField standout color="black" v-bind="attrs">
     <div class="self-center full-width">
       <slot v-if="$slots.label" name="label" />
       <slot v-else-if="label">{{ label }}</slot>
       <slot v-else-if="$slots.default" />
     </div>
-  </q-field>
+  </QField>
 </template>
 
 <script setup>
@@ -14,5 +14,5 @@ defineOptions({
 });
 const $attrs = useAttrs();
 const label = get($attrs, 'label', undefined);
-const attrs = omit($attrs, 'label');
+const attrs = omit($attrs, ['label']);
 </script>

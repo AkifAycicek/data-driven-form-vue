@@ -1,3 +1,3 @@
 <template>
-  <q-input outlined color="black" v-bind="$attrs" />
+  <QInput outlined color="black" v-bind="$attrs" />
 </template>

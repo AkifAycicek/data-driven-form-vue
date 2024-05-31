@@ -18,10 +18,11 @@
     "skipLibCheck": true,
     "paths": {
       "@style/*": ["src/style/*"],
-      "@components/*": ["src/components/*"]
+      "@components/*": ["src/components/*"],
+      "@plugins/*": ["src/plugins/*"],
     },
     "composite": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src/**/*"]
+  "include": ["auto-imports.d.ts", "src/**/*"]
 }

@@ -19,6 +19,7 @@ export default defineConfig({
       '@style': resolve(__dirname, 'src/style'),
       '@components': resolve(__dirname, 'src/components'),
       '@plugins': resolve(__dirname, 'src/plugins'),
+      '@libs': resolve(__dirname, 'src/libs'),
     },
   },
   plugins: [
@@ -37,6 +38,14 @@ export default defineConfig({
         'vue',
         'vue-router',
         'quasar',
+        {
+          from: '@libs/Collection.js',
+          imports: ['Collection'],
+        },
+        {
+          from: '@libs/Form.js',
+          imports: ['Form'],
+        },
         {
           from: 'lodash',
           imports: lodash.keys(

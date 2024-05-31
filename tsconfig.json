@@ -20,6 +20,7 @@
       "@style/*": ["src/style/*"],
       "@components/*": ["src/components/*"],
       "@plugins/*": ["src/plugins/*"],
+      "@libs/*": ["src/libs/*"]
     },
     "composite": true,
     "allowSyntheticDefaultImports": true

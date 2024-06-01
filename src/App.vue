@@ -80,6 +80,7 @@ const inputForm = Form.create({
 const outputForm = Form.create({
   data: {},
 });
+const isPlotHidden = ref(true);
 
 function* counter() {
   let counter = 1;
@@ -115,14 +116,13 @@ async function execute() {
 </script>
 
 <template>
-  <div class="row q-gutter-lg justify-center">
-    <div class="col-sm-4 col-auto">
-      <div class="column q-gutter-lg">
+  <div class="grid-container grid-container--pro">
         <EDataDrivenForm
+      class="grid-container__inputs"
           :data="formData.inputs"
           :model-value="inputForm"
           @input="(value) => inputForm.merge(value)" />
-        <EButton push label="Execute" @click="execute()">
+    <EButton class="grid-container__execute-btn" push label="Execute" @click="execute()">
           <QBadge v-if="clickCount > 0" color="orange" floating :label="clickCount" />
           <QLinearProgress
             v-if="clickCount > 0"
@@ -130,16 +130,12 @@ async function execute() {
             :value="(clickCount / 60) * 10"
             class="q-mt-md" />
         </EButton>
-      </div>
-    </div>
-    <div class="col-sm-4 col-auto">
-      <div class="column q-gutter-lg">
         <EDataDrivenForm
+      class="grid-container__outputs"
           :data="formData.outputs"
           :model-value="outputForm"
-          @submit.prevent="execute" />
-      </div>
-    </div>
+      @submit.prevent="isPlotHidden = !isPlotHidden">
+    </EDataDrivenForm>
   </div>
 </template>
 
@@ -148,5 +144,50 @@ async function execute() {
   width: 100vw;
   height: 100vh;
   padding: 1rem;
+}
+
+.grid-container {
+  display: grid;
+  gap: 1rem;
+  align-itemss: center;
+  width: 80%;
+  margin: auto;
+
+  &--pro {
+    grid-template-areas:
+      'inputs inputs graph graph graph'
+      'outputs outputs graph graph graph'
+      'exct-btn exct-btn . . .';
+    grid-template-rows: auto auto auto;
+    grid-template-columns: repeat(5, 1fr);
+  }
+  @media (max-width: $breakpoint-sm-min) {
+    width: 100%;
+
+    &--pro {
+      grid-template-areas:
+        'inputs inputs outputs outputs'
+        'exct-btn exct-btn outputs outputs'
+        'graph graph graph graph';
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+    }
+  }
+
+  &__inputs {
+    grid-area: inputs;
+  }
+
+  &__outputs {
+    grid-area: outputs;
+  }
+
+  &__graph {
+    grid-area: graph;
+  }
+
+  &__execute-btn {
+    grid-area: exct-btn;
+  }
 }
 </style>

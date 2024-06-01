@@ -12,5 +12,6 @@ setupComponents(app);
 app.use(Quasar, {
   plugins: {},
 });
+app.use(createPinia());
 
 app.mount('#app');

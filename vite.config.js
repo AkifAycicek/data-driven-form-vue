@@ -20,6 +20,7 @@ export default defineConfig({
       '@components': resolve(__dirname, 'src/components'),
       '@plugins': resolve(__dirname, 'src/plugins'),
       '@libs': resolve(__dirname, 'src/libs'),
+      '@store': resolve(__dirname, 'src/store'),
     },
   },
   plugins: [
@@ -34,10 +35,12 @@ export default defineConfig({
     }),
     AutoImport({
       vueTemplate: true,
+      defaultExportByFilename: true,
       imports: [
         'vue',
         'vue-router',
         'quasar',
+        'pinia',
         {
           from: '@libs/Collection.js',
           imports: ['Collection'],
@@ -45,6 +48,10 @@ export default defineConfig({
         {
           from: '@libs/Form.js',
           imports: ['Form'],
+        },
+        {
+          from: '@store/index.js',
+          imports: ['useOperationStore'],
         },
         {
           'plotly.js-dist': [['default', 'Plotly']],

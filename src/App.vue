@@ -69,7 +69,7 @@ const formData = {
 };
 
 const inputForm = Form.create({
-  data: {},
+  data: { x: null, y: null },
   rules: {
     x: 'numeric|required|min:0|max:100',
     y: 'numeric|required|min:0|max:100',
@@ -78,26 +78,24 @@ const inputForm = Form.create({
 });
 
 const outputForm = Form.create({
-  data: {},
+  data: { addition: null, multiplication: null },
 });
 
-let plotContainer = ref();
+const operationStore = useOperationStore();
+const { operations } = storeToRefs(operationStore);
+let tempOperations = [];
+
 const isPlotHidden = ref(true);
-const plotData = reactive([
-  {
-    x: [],
-    y: [],
-    line: { simplify: false },
-  },
-]);
+const plotData = reactive([{ x: [], y: [] }]);
+
 const plotLayout = {
   title: 'Line and Scatter Plot',
   xaxis: {
-    title: 'X Axis',
+    title: 'Number of operations',
     range: [0, 100],
   },
   yaxis: {
-    title: 'Y Axis',
+    title: 'Addition operation results',
     range: [0, 100],
   },
 };
@@ -107,33 +105,50 @@ function* counter() {
 
   while (true) {
     yield counter++;
+
     if (counter > 6) {
-      counter = 0;
+      counter = 1;
     }
   }
 }
-const clickCounter = counter();
+const operationCounter = counter();
 const clickCount = ref(null);
 
 async function execute() {
-  clickCount.value = clickCounter.next().value;
+  outputForm.reset();
+
+  const { x, y } = fromPairs(
+    map(toPairs(inputForm.toObject()), ([key, value]) => [key, parseFloat(value)]),
+  );
+
+  if (inputForm.validate() && isNumber(x) && isNumber(y)) {
+    clickCount.value = operationCounter.next().value;
+
+    outputForm.merge({
+      addition: x + y,
+      multiplication: x * y,
+    });
+
+    tempOperations.push({
+      addition: outputForm.addition,
+      multiplication: outputForm.multiplication,
+    });
+  }
 
   if (clickCount.value >= 6) {
-    const { x, y } = fromPairs(
-      map(toPairs(inputForm.toObject()), ([key, value]) => [key, parseFloat(value)]),
-    );
+    operations.value.push(...tempOperations);
+    tempOperations = [];
 
-    if (inputForm.validate() && isNumber(x) && isNumber(y)) {
-      outputForm.merge({
-        addition: x + y,
-        multiplication: x * y,
-      });
-      plotData[0].x.push(x);
-      plotData[0].y.push(y);
-    }
-
-    console.log(inputForm.toObject());
-    console.log(outputForm.toObject());
+    plotData[0] = {
+      x: takeRight(
+        operations.value.map((e, i) => i + 1),
+        5,
+      ),
+      y: takeRight(
+        operations.value.map(({ addition }) => addition),
+        5,
+      ),
+    };
   }
 }
 </script>
@@ -145,7 +160,11 @@ async function execute() {
       :data="formData.inputs"
       :model-value="inputForm"
       @input="(value) => inputForm.merge(value)" />
-    <EButton class="grid-container__execute-btn" push label="Execute" @click="execute()">
+    <EButton
+      class="grid-container__execute-btn self-center"
+      push
+      label="Execute"
+      @click="execute()">
       <QBadge v-if="clickCount > 0" color="orange" floating :label="clickCount" />
       <QLinearProgress
         v-if="clickCount > 0"
@@ -169,8 +188,7 @@ async function execute() {
       class="grid-container__graph"
       :data="plotData"
       :layout="plotLayout"
-      :hidden="isPlotHidden"
-      @plot-created="(e) => (plotContainer = e)" />
+      :hidden="isPlotHidden" />
   </div>
 </template>
 

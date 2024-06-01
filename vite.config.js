@@ -47,6 +47,9 @@ export default defineConfig({
           imports: ['Form'],
         },
         {
+          'plotly.js-dist': [['default', 'Plotly']],
+        },
+        {
           from: 'lodash',
           imports: lodash.keys(
             lodash.fromPairs(

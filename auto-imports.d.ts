@@ -8,6 +8,7 @@ declare global {
   const Collection: typeof import('@libs/Collection.js')['Collection']
   const EffectScope: typeof import('vue')['EffectScope']
   const Form: typeof import('@libs/Form.js')['Form']
+  const Plotly: typeof import('plotly.js-dist')['default']
   const _: typeof import('lodash')['_']
   const add: typeof import('lodash')['add']
   const after: typeof import('lodash')['after']
@@ -389,6 +390,7 @@ declare module 'vue' {
     readonly Collection: UnwrapRef<typeof import('@libs/Collection.js')['Collection']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly Form: UnwrapRef<typeof import('@libs/Form.js')['Form']>
+    readonly Plotly: UnwrapRef<typeof import('plotly.js-dist')['default']>
     readonly _: UnwrapRef<typeof import('lodash')['_']>
     readonly add: UnwrapRef<typeof import('lodash')['add']>
     readonly after: UnwrapRef<typeof import('lodash')['after']>
@@ -763,6 +765,7 @@ declare module '@vue/runtime-core' {
     readonly Collection: UnwrapRef<typeof import('@libs/Collection.js')['Collection']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly Form: UnwrapRef<typeof import('@libs/Form.js')['Form']>
+    readonly Plotly: UnwrapRef<typeof import('plotly.js-dist')['default']>
     readonly _: UnwrapRef<typeof import('lodash')['_']>
     readonly add: UnwrapRef<typeof import('lodash')['add']>
     readonly after: UnwrapRef<typeof import('lodash')['after']>

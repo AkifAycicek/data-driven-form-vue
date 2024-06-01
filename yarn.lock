@@ -1636,6 +1636,11 @@ pkg-types@^1.0.3, pkg-types@^1.1.0, pkg-types@^1.1.1:
     mlly "^1.7.0"
     pathe "^1.1.2"
 
+plotly.js-dist@^2.33.0:
+  version "2.33.0"
+  resolved "https://registry.yarnpkg.com/plotly.js-dist/-/plotly.js-dist-2.33.0.tgz#cdd22da836cd83f53215a03d82bee697923a29f3"
+  integrity sha512-Q995s9+9coO+5EStfCtlSW7HQXR14L3i/jTNXTZap7lt1v7r2QPuokAUkOHqMwmE1RsJJjtqnGRQH9JlEq8qPQ==
+
 postcss-html@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/postcss-html/-/postcss-html-1.7.0.tgz#06c7408f9a1be3b89643c916d5dcd99fb1f069a0"

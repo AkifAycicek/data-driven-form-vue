@@ -80,7 +80,27 @@ const inputForm = Form.create({
 const outputForm = Form.create({
   data: {},
 });
+
+let plotContainer = ref();
 const isPlotHidden = ref(true);
+const plotData = reactive([
+  {
+    x: [],
+    y: [],
+    line: { simplify: false },
+  },
+]);
+const plotLayout = {
+  title: 'Line and Scatter Plot',
+  xaxis: {
+    title: 'X Axis',
+    range: [0, 100],
+  },
+  yaxis: {
+    title: 'Y Axis',
+    range: [0, 100],
+  },
+};
 
 function* counter() {
   let counter = 1;
@@ -108,6 +128,9 @@ async function execute() {
         addition: x + y,
         multiplication: x * y,
       });
+      plotData[0].x.push(x);
+      plotData[0].y.push(y);
+    }
 
     console.log(inputForm.toObject());
     console.log(outputForm.toObject());
@@ -117,25 +140,37 @@ async function execute() {
 
 <template>
   <div class="grid-container grid-container--pro">
-        <EDataDrivenForm
+    <EDataDrivenForm
       class="grid-container__inputs"
-          :data="formData.inputs"
-          :model-value="inputForm"
-          @input="(value) => inputForm.merge(value)" />
+      :data="formData.inputs"
+      :model-value="inputForm"
+      @input="(value) => inputForm.merge(value)" />
     <EButton class="grid-container__execute-btn" push label="Execute" @click="execute()">
-          <QBadge v-if="clickCount > 0" color="orange" floating :label="clickCount" />
-          <QLinearProgress
-            v-if="clickCount > 0"
-            color="orange"
-            :value="(clickCount / 60) * 10"
-            class="q-mt-md" />
-        </EButton>
-        <EDataDrivenForm
+      <QBadge v-if="clickCount > 0" color="orange" floating :label="clickCount" />
+      <QLinearProgress
+        v-if="clickCount > 0"
+        color="orange"
+        :value="(clickCount / 60) * 10"
+        class="q-mt-md" />
+    </EButton>
+    <EDataDrivenForm
       class="grid-container__outputs"
-          :data="formData.outputs"
-          :model-value="outputForm"
+      :data="formData.outputs"
+      :model-value="outputForm"
       @submit.prevent="isPlotHidden = !isPlotHidden">
+      <template #graphBtn="{ node }">
+        <EButton
+          v-bind="node"
+          :label="!isPlotHidden ? node.label2 : node.label"
+          :color="!isPlotHidden ? node['bg-color2'] : node['bg-color']" />
+      </template>
     </EDataDrivenForm>
+    <EPlotly
+      class="grid-container__graph"
+      :data="plotData"
+      :layout="plotLayout"
+      :hidden="isPlotHidden"
+      @plot-created="(e) => (plotContainer = e)" />
   </div>
 </template>
 

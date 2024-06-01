@@ -10,6 +10,7 @@
     "ExtractPublicPropTypes": true,
     "Form": true,
     "InjectionKey": true,
+    "Plotly": true,
     "PropType": true,
     "Ref": true,
     "VNode": true,

@@ -1,4 +1,5 @@
 <script setup>
+import { useOperationsUI } from '@composables/operationsUI.js';
 
 const formData = {
   inputs: {
@@ -69,6 +70,12 @@ const formData = {
   },
 };
 
+const router = useRouter();
+const operationsUI = useOperationsUI();
+
+if (!operationsUI.availableUIs.includes(operationsUI.UI.value)) {
+  router.replace({ name: 'operations-ui-select' });
+}
 
 const inputForm = Form.create({
   data: {},
@@ -155,7 +162,7 @@ async function execute() {
 }
 </script>
 <template>
-  <div class="operations operations__ui operations__ui--pro">
+  <div class="operations operations__ui" :class="`operations__ui--${operationsUI.UI.value}`">
     <EDataDrivenForm
       class="operations__inputs"
       :data="formData.inputs"

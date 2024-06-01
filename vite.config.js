@@ -23,6 +23,7 @@ export default defineConfig({
       '@store': resolve(__dirname, 'src/store'),
       '@router': resolve(__dirname, 'src/router'),
       '@pages': resolve(__dirname, 'src/pages'),
+      '@composables': resolve(__dirname, 'src/composables'),
     },
   },
   plugins: [

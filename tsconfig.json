@@ -24,6 +24,7 @@
       "@store/*": ["src/store/*"],
       "@router/*": ["src/router/*"],
       "@pages/*": ["src/pages/*"],
+      "@composables/*": ["src/composables/*"]
     },
     "composite": true,
     "allowSyntheticDefaultImports": true

@@ -21,7 +21,9 @@
       "@components/*": ["src/components/*"],
       "@plugins/*": ["src/plugins/*"],
       "@libs/*": ["src/libs/*"],
-      "@store/*": ["src/store/*"]
+      "@store/*": ["src/store/*"],
+      "@router/*": ["src/router/*"],
+      "@pages/*": ["src/pages/*"],
     },
     "composite": true,
     "allowSyntheticDefaultImports": true

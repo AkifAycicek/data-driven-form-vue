@@ -1,0 +1,66 @@
+.operations {
+  &__ui {
+    display: grid;
+    gap: 1rem;
+
+    &--pro {
+      grid-template-areas:
+        'inputs inputs graph graph'
+        'outputs outputs graph graph'
+        'button button . . ';
+      grid-template-rows: repeat(3, minmax(50px, auto));
+      grid-template-columns: repeat(4, minmax(25px, 1fr));
+    }
+
+    &--vertical {
+      grid-template-areas:
+        'inputs'
+        'outputs'
+        'button'
+        'graph';
+      grid-template-rows: repeat(4, minmax(50px, auto));
+      grid-template-columns: minmax(25px, 1fr);
+    }
+
+    &--simple {
+      grid-template-areas:
+        'inputs outputs'
+        'button .'
+        'graph graph';
+      grid-template-rows: repeat(3, minmax(50px, auto));
+      grid-template-columns: repeat(2, minmax(25px, 1fr));
+    }
+  }
+
+  &__inputs {
+    grid-area: inputs;
+  }
+
+  &__outputs {
+    grid-area: outputs;
+  }
+
+  &__graph {
+    grid-area: graph;
+  }
+
+  &__button {
+    grid-area: button;
+  }
+
+  @media (max-width: $breakpoint-sm-min) {
+    width: 100%;
+
+    &__ui {
+      gap: 0.5rem;
+
+      &--pro {
+        grid-template-areas:
+          'inputs inputs outputs outputs'
+          'button button outputs outputs'
+          'graph graph graph graph';
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+  }
+}

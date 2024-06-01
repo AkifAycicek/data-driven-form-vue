@@ -21,6 +21,8 @@ export default defineConfig({
       '@plugins': resolve(__dirname, 'src/plugins'),
       '@libs': resolve(__dirname, 'src/libs'),
       '@store': resolve(__dirname, 'src/store'),
+      '@router': resolve(__dirname, 'src/router'),
+      '@pages': resolve(__dirname, 'src/pages'),
     },
   },
   plugins: [

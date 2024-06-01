@@ -16,7 +16,8 @@
     "plotly.js-dist": "^2.33.0",
     "quasar": "^2.16.4",
     "validatorjs": "^3.22.1",
-    "vue": "^3.4.21"
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.2"
   },
   "devDependencies": {
     "@quasar/vite-plugin": "^1.7.0",

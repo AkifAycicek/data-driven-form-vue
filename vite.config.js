@@ -10,7 +10,7 @@ import eslint from 'vite-plugin-eslint';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/egralumis/',
+  base: '/data-driven-form-vue/',
   server: {
     port: 6161,
   },
